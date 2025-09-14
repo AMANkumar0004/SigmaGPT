@@ -1,8 +1,6 @@
 import "dotenv/config";
 
-const getGeminiAPIResponse = async(message)=>{
-      
-
+const getGeminiAPIResponse = async (message) => {
   const options = {
     method: "POST",
     headers: {
@@ -11,17 +9,19 @@ const getGeminiAPIResponse = async(message)=>{
     body: JSON.stringify({
       contents: [
         {
-          parts: [{ text: message }]
-        }
-      ]
+          parts: [{ text: message }],
+        },
+      ],
     }),
   };
 
   try {
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDCk8KQ0YDFOwnbBF2No9fv9MObfqys-sc",
-      options
-    );
+    // ✅ Base URL without exposing key
+    const baseUrl =
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+
+    // ✅ Use environment variable instead of hardcoded key
+    const response = await fetch(`${baseUrl}?key=${process.env.GEMINI_API_KEY}`, options);
 
     const data = await response.json();
     console.log("Full Response:", data);
@@ -31,15 +31,14 @@ const getGeminiAPIResponse = async(message)=>{
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "No response from Gemini.";
 
-      let plainText = reply.replace(/\\n/g, "\n");
-      plainText = plainText.replace(/\*\*/g, "").replace(/\*/g, "");
+    let plainText = reply.replace(/\\n/g, "\n");
+    plainText = plainText.replace(/\*\*/g, "").replace(/\*/g, "");
 
-    return plainText ;
+    return plainText;
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Something went wrong" });
+    throw new Error("Something went wrong while calling Gemini API");
   }
-}
-
+};
 
 export default getGeminiAPIResponse;
