@@ -10,7 +10,7 @@ const SideBar = () => {
 
       const getAllThreads = async ()=>{
       try {
-        const response =await fetch("http://localhost:8080/api/thread")
+        const response =await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/thread`)
         const res = await response.json();
         const filterData = res.map(thread=>({ threadId: thread.threadId,title: thread.title}))
         
@@ -37,7 +37,7 @@ const SideBar = () => {
       const changeThread =async(newThreadId)=>{
       setCurrThreadId(newThreadId);
       try{
-         const response = await  fetch(`http://localhost:8080/api/thread/${newThreadId}`)
+         const response = await  fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/thread/${newThreadId}`)
          const res = await response.json();
          setPrevChats(Array.isArray(res) ? res : []);
          setNewChat(false);
