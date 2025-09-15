@@ -1,0 +1,24 @@
+Revert "Update server.js"
+
+This reverts commit 64bc15a8d825a882e80bbab342fcccd5001e2a73.
+
+# Conflicts:
+#	backend/server.js
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is behind 'origin/main' by 14 commits, and can be fast-forwarded.
+#   (use "git pull" to update your local branch)
+#
+# You are currently reverting commit 64bc15a.
+#
+# Changes to be committed:
+#	modified:   backend/server.js
+#
+# Changes not staged for commit:
+#	modified:   frontend/.gitignore
+#	modified:   frontend/src/ChatWindow.css
+#	modified:   frontend/src/SideBar.css
+#

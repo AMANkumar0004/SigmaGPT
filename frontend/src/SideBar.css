@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+     
     
 
 }
@@ -45,6 +46,7 @@ button:hover{
     margin: 10px;
     padding: 10px;
     height: 100%;
+    overflow-y: scroll;
 }
 
 .history li {
@@ -55,6 +57,7 @@ button:hover{
     font-size: 14px;
     border: solid 10px transparent;
     position: relative;
+    
 }
 
 .history li:hover{
@@ -87,4 +90,8 @@ button:hover{
 .highlighted{
     background-color: rgba(180,180, 180, 0.5);
     border-radius: 10px;
+}
+
+.history::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
