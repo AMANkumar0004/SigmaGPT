@@ -36,7 +36,6 @@ app.listen(PORT, () => {
   connectDB();
 });
 
-
 const connectDB = async()=>{
 
     try{
