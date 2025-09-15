@@ -8,8 +8,22 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-app.use(cors());
+const allowedOrigins = [
+  "https://sigma-gpt-wqqi.vercel.app",
+  "http://localhost:3000",
+];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 app.use("/api",chatRoutes);
 
