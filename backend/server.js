@@ -2,17 +2,22 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import mongoose from "mongoose";
-import chatRoutes from "./routes/chat.js"
+import chatRoutes from "./routes/chat.js";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
 
-app.use(express.json());
+// Connect to DB when the function initializes (serverless warm start)
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => console.log("Connected with Database!"))
+  .catch((err) => console.error("Failed to connect with DB", err));
+
 const allowedOrigins = [
   "https://sigma-gpt-wqqi.vercel.app",
-  "http://localhost:3000",
+  "http://localhost:5174",
 ];
 
+app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -29,32 +34,10 @@ app.use(
   })
 );
 
-app.use("/api",chatRoutes);
+app.use("/api", chatRoutes);
 
-app.listen(PORT, () => {
-  console.log(`server is listening on ${PORT}`);
-  connectDB();
+app.get("/", (req, res) => {
+  res.send("API is working!");
 });
 
-const connectDB = async()=>{
-
-    try{
-      await  mongoose.connect(process.env.MONGODB_URL)
-      console.log("connected with Database !");
-      
-    }catch(err){
-        console.log("failed to connect with the db",err);     
-    }
-}
-
-
-
-
-
-
-
-
-
-// app.post("/test", async (req, res) => {
-
-// });
+export default app;
