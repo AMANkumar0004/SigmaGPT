@@ -6,7 +6,6 @@ import chatRoutes from "./routes/chat.js";
 
 const app = express();
 
-// Connect to DB when the function initializes (serverless warm start)
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("Connected with Database!"))
@@ -17,10 +16,14 @@ const allowedOrigins = [
   "http://localhost:5174",
 ];
 
+// Apply JSON middleware first
 app.use(express.json());
+
+// Apply CORS middleware globally
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log("Incoming origin:", origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -34,6 +37,24 @@ app.use(
   })
 );
 
+// Explicitly handle OPTIONS preflight requests
+app.options(
+  "*",
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// Define routes after middleware
 app.use("/api", chatRoutes);
 
 app.get("/", (req, res) => {
