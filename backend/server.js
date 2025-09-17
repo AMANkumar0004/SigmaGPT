@@ -37,9 +37,9 @@ app.use(
   })
 );
 
-// Explicitly handle OPTIONS preflight requests
+// Optionally explicitly handle OPTIONS if needed
 app.options(
-  "*",
+  "/*",
   cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
