@@ -18,7 +18,7 @@ const getGeminiAPIResponse = async (message) => {
   try {
     // ✅ Base URL without exposing key
     const baseUrl =
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
     // ✅ Use environment variable instead of hardcoded key
     const response = await fetch(`${baseUrl}?key=${process.env.GEMINI_API_KEY}`, options);
