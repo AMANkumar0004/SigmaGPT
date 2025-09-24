@@ -22,9 +22,9 @@ const SideBar = () => {
       }
       }
 
-      // useEffect(()=>{
-      //   getAllThreads();
-      // },[currThreadId])
+      useEffect(()=>{
+        getAllThreads();
+      },[currThreadId])
 
       const createNewChat =()=>{
         setNewChat(true);
